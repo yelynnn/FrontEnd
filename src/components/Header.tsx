@@ -1,13 +1,14 @@
 // Header component
+import { useContext } from 'react';
 import Google from '../../public/images/image.png';
 import Image from 'next/image';
 
 const Header = () => {
   const link = `https://accounts.google.com/o/oauth2/v2/auth?client_id=526903298668-in7ec446ogrb9ji9u5vendfcb433dp5d.apps.googleusercontent.com&redirect_uri=http://localhost:3000/oauth/callback/google&response_type=code&scope=email profile`;
-
   const loginHandler = () => {
     window.location.href = link;
   };
+
 
   return (
     <div className="bg-blue-300 flex flex-row justify-between px-10 py-5 w-[100%] h-[60px]">

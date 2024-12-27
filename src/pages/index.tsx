@@ -9,20 +9,22 @@ import MessageBox from '@/components/MessageBox';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useUserName } from './_app';
 
 const api = axios.create({
   baseURL: 'http://ec2-3-38-49-253.ap-northeast-2.compute.amazonaws.com:8080/',
 });
 
-interface homeProps{
+interface HomeProps{
   message: string;
   fromName: string
 }
 
 export default function Home() {
-  const [messages, setMessages] = useState<homeProps[]>([]);
+  const [messages, setMessages] = useState<HomeProps[]>([]);
   const router = useRouter();
-  const name = '김예린';
+  const {name,setName}=useUserName();
+ 
 
   const handleClick = () => {
     router.push(`/new_message`);
@@ -43,8 +45,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    handleGetMessage();
-  }, []);
+    if (name) {
+      handleGetMessage();
+    }
+  }, [name]);
+
 
   return (
     // <main>
@@ -58,7 +63,7 @@ export default function Home() {
           연말 편지 우체통
         </h1>
         <h3 className="text-base font-bold font-['Hakyo'] mt-6 ">
-          💌 김예린의 연말 편지 우체통으로 {messages.length}건의 편지가
+          💌 {name}의 연말 편지 우체통으로 {messages.length}건의 편지가
           도착했어요!
         </h3>
         <button

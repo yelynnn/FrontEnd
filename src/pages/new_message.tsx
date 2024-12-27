@@ -15,7 +15,7 @@ interface newMessage {
   message: string;
 }
 
-function new_message({ toName, fromName, message }: newMessage) {
+function Newmessage({ toName, fromName, message }: newMessage) {
   const router = useRouter();
 
   const schema = yup.object().shape({
@@ -88,4 +88,5 @@ function new_message({ toName, fromName, message }: newMessage) {
   );
 }
 
-export default new_message;
+export default Newmessage;
+
