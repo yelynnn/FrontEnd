@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Cookies from 'js-cookie'; 
 
-function google() {
+function SignUpPage() {
   const router = useRouter();
   const { code } = router.query;
 
@@ -13,19 +14,29 @@ function google() {
       );
       const data = response.data;
 
-      if (!data) {
+      if(response.status===200){
+        console.log(data);
+        Cookies.set("accessToken",data.access_token,{expires:1});
+        Cookies.set('name', data.name, { expires: 1 });
+        router.push('/');
+      }else{
         throw Error('AccessToken Error');
       }
 
-      setSession(data.accessToken);
-      setSession(data.name);
     } catch (error) {
       console.log('소셜 로그인 에러');
       throw error;
     }
   };
 
+  useEffect(()=>{
+    if(!code){
+      return;
+    };
+    handleLogin();
+  },[code])
+
   return <div>google</div>;
 }
 
-export default google;
+export default SignUpPage;
